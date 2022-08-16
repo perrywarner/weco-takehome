@@ -1,0 +1,9 @@
+{
+  "name": "weco-takehome",
+  "version": "1.0.0",
+  "description": "Takehome test as code interview for WECO. Clone of a page",
+  "main": "index.js",
+  "repository": "https://github.com/perrywarner/weco-takehome.git",
+  "author": "perrywarner <perrywarner11@gmail.com>",
+  "license": "MIT"
+}
