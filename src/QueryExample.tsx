@@ -7,6 +7,8 @@ import {
 
 const queryClient = new QueryClient();
 
+// <QueryExample> is a "wrapper" HoC of <Example> with the React Query Context
+// it is basically a copypaste of https://tanstack.com/query/v4/docs/overview#enough-talk-show-me-some-code-already
 export default function QueryExample() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -25,7 +27,6 @@ function Example() {
   if (isLoading) return <p>"Loading..."</p>;
 
   // "assertedError" is a Perry hack to override "error" being of type "unknown" by default (i.e. unworkable by default: TS throws error if you try "error.message" where error is "unknown")
-  // should be OK since this code's ripped from https://tanstack.com/query/v4/docs/overview#enough-talk-show-me-some-code-already
   const errorAsAny: any = error;
 
   if (errorAsAny)

@@ -1,0 +1,32 @@
+{
+	"info": {
+		"_postman_id": "bc967a88-f3d1-4c95-8a4d-3787626de260",
+		"name": "WECO Takehome",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Menu Entries",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://app-staging.weco-dev.com/api/v1/sample/",
+					"protocol": "https",
+					"host": [
+						"app-staging",
+						"weco-dev",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"sample",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
