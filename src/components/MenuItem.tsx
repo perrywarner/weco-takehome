@@ -27,11 +27,15 @@ export const MenuItem: FC<MenuItemProps> = ({
     }
   };
 
+  // TODO uncomment when done with testing (everything seems to be sold out right now)
+  //   const soldOut = entry.sold_out
+  const soldOut = false;
+
   return (
     <div style={{ display: "flex" }}>
       <p style={{ flex: "5" }}>
         <strong>
-          {entry.sold_out ? "SOLD OUT!!" : null}&nbsp;
+          {soldOut ? "SOLD OUT!!" : null}&nbsp;
           {entry.item.name}&nbsp;|&nbsp;
         </strong>
         {getFormattedDescription(entry.item.description)}
@@ -49,6 +53,7 @@ export const MenuItem: FC<MenuItemProps> = ({
           value="-"
           style={{ height: "2em", width: "2em" }}
           onClick={onSubtract}
+          disabled={soldOut}
         />
         <p>{quantity}</p>
         <input
@@ -56,6 +61,7 @@ export const MenuItem: FC<MenuItemProps> = ({
           value="+"
           style={{ height: "2em", width: "2em" }}
           onClick={onAdd}
+          disabled={soldOut}
         />
       </div>
     </div>
