@@ -4,9 +4,7 @@ import {
   QueryClientProvider,
   useQuery,
 } from "@tanstack/react-query";
-// using renamed import here to avoid naming conflict since <MenuEntry> is a component in this file and also an interface from elsewhere
-// * considered prefixing "MenuEntry" in /types/MenuEntry with "I" to be "IMenuEntry" but I want to avoid dealing with that rabbit hole: https://stackoverflow.com/a/5817904
-import { MenuEntry as MenuEntryType } from "./types/MenuEntry";
+import { MenuEntry } from "./types/MenuEntry";
 import { parseHtmlContent } from "./utils/parseHtmlContent";
 
 const queryClient = new QueryClient();
@@ -21,7 +19,7 @@ export const ApiTest: FC = () => {
   );
 };
 
-const fetchMenu = (): Promise<MenuEntryType[]> => {
+const fetchMenu = (): Promise<MenuEntry[]> => {
   return fetch("https://app-staging.weco-dev.com/api/v1/sample/").then(
     (res) => {
       return res.json();
@@ -29,11 +27,11 @@ const fetchMenu = (): Promise<MenuEntryType[]> => {
   );
 };
 
-interface MenuEntryProps {
-  entry: MenuEntryType;
+interface MenuItemProps {
+  entry: MenuEntry;
 }
 
-const MenuEntry: FC<MenuEntryProps> = ({ entry }) => {
+const MenuItem: FC<MenuItemProps> = ({ entry }) => {
   // needed since:
   // * entry.item.description looks like "<span data-sheets-value="...">puffed tofu, snow peas...</span>"
   // * where we only care about "puffed tofu, snow peas..." here
@@ -68,7 +66,7 @@ const ApiTestComponent = () => {
     return (
       <div>
         {menuEntries.map((entry) => (
-          <MenuEntry entry={entry} />
+          <MenuItem entry={entry} />
         ))}
       </div>
     );
