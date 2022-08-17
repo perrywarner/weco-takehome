@@ -27,11 +27,26 @@ const fetchMenu = (): Promise<MenuEntry[]> => {
   );
 };
 
+enum Day {
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday,
+  Sunday,
+}
+
+type TransportChoice = "pickup" | "delivery";
+
 const ApiTestComponent = () => {
   // React useState with Map type (object of key-value pairs) isn't a normal design pattern.
   // However, I chose it since we have an indeterminate length of "Menu Entries" that only are available to this component after the request loads,
   // and I think a Map is the best data structure for when I want to capture a value attached to a unique ID and I don't know the available IDs ahead of time.
   const [menuChoice, setMenuChoice] = useState<Map<number, number>>(new Map());
+  const [transportChoice, setTransportChoice] = useState<
+    Map<Day, TransportChoice>
+  >(new Map());
 
   const {
     isLoading,
@@ -60,15 +75,17 @@ const ApiTestComponent = () => {
   } else {
     return (
       <div>
-        {menuEntries.map((entry) => (
-          <MenuItem
-            entry={entry}
-            quantity={menuChoice.get(entry.id) ?? 0}
-            onAdd={() => updateQuantity(entry.id, "add")}
-            onSubtract={() => updateQuantity(entry.id, "sub")}
-            key={entry.id}
-          />
-        ))}
+        {menuEntries.map((entry) => {
+          return (
+            <MenuItem
+              entry={entry}
+              quantity={menuChoice.get(entry.id) ?? 0}
+              onAdd={() => updateQuantity(entry.id, "add")}
+              onSubtract={() => updateQuantity(entry.id, "sub")}
+              key={entry.id}
+            />
+          );
+        })}
       </div>
     );
   }
