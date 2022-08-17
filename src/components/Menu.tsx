@@ -14,7 +14,7 @@ enum Day {
 
 type TransportChoice = "pickup" | "delivery";
 
-const sortByDay = (entries: MenuEntry[]) => {
+const sortByDay = (entries: MenuEntry[]): Map<Day, MenuEntry[]> => {
   const map = new Map<Day, MenuEntry[]>();
   entries.forEach((entry) => {
     // "as Day" assertion is hack to get string value to play nice with Day enum
