@@ -3,16 +3,43 @@ import { MenuEntry } from "../types/MenuEntry";
 import { MenuItem } from "./MenuItem";
 
 enum Day {
-  Monday,
-  Tuesday,
-  Wednesday,
-  Thursday,
-  Friday,
-  Saturday,
-  Sunday,
+  Monday = "mon",
+  Tuesday = "tue",
+  Wednesday = "wed",
+  Thursday = "thu",
+  Friday = "fri",
+  Saturday = "sat",
+  Sunday = "sun",
 }
 
 type TransportChoice = "pickup" | "delivery";
+
+const sortByDay = (entries: MenuEntry[]) => {
+  const map = new Map<Day, MenuEntry[]>();
+  entries.forEach((entry) => {
+    // "as Day" assertion is hack to get string value to play nice with Day enum
+    // TODO re-check SO to remove hack when time allows: https://stackoverflow.com/a/47755096
+    const day = entry.day as Day;
+
+    // TODO check: is entry.day always "mon", "tue", ... ? if not, this'll break
+    if (Object.values(Day).includes(day)) {
+      const existing = map.get(day);
+      // append entry to array if exist in Map; otherwise create new K/V pair
+      if (existing) {
+        map.set(day, [...existing, entry]);
+      } else {
+        map.set(day, [entry]);
+      }
+    } else {
+      console.error(
+        `Failed to sort Menu Entry ${entry.id} by day. Unhandled value was ${entry.day}. Please report to technical support. Full object: `,
+        entry
+      );
+    }
+  });
+
+  return map;
+};
 
 interface MenuProps {
   data: MenuEntry[];
@@ -39,6 +66,8 @@ export const Menu: FC<MenuProps> = ({ data }) => {
       setMenuChoice(new Map(menuChoice.set(id, previous - 1)));
     }
   };
+
+  const sortedData = sortByDay(data);
 
   return (
     <div>
