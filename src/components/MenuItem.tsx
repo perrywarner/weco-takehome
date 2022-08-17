@@ -7,10 +7,17 @@ interface MenuItemProps {
 }
 
 export const MenuItem: FC<MenuItemProps> = ({ entry }) => {
-  // needed since:
-  // * entry.item.description looks like "<span data-sheets-value="...">puffed tofu, snow peas...</span>"
-  // * where we only care about "puffed tofu, snow peas..." here
-  const parsedDescription = parseHtmlContent(entry.item.description);
+  // entry.item.description takes two "shapes":
+  // * text (OK to use): "puffed tofu, snow peas..."
+  // * HTML (need eliminate HTML part): "<span data-sheets-value="...">puffed tofu, snow peas...</span>"
+  const getFormattedDescription = (input: string) => {
+    const parsedDescription = parseHtmlContent(entry.item.description);
+    if (parsedDescription !== null) {
+      return parsedDescription;
+    } else {
+      return input;
+    }
+  };
 
   return (
     <div>
@@ -19,7 +26,7 @@ export const MenuItem: FC<MenuItemProps> = ({ entry }) => {
           {entry.sold_out ? "SOLD OUT!!" : null}&nbsp;
           {entry.item.name}&nbsp;|&nbsp;
         </strong>
-        {parsedDescription}
+        {getFormattedDescription(entry.item.description)}
       </p>
     </div>
   );

@@ -2,10 +2,11 @@
  * ```"<p>hello world</p>"``` => ```"hello world"```
  *
  * Gets the text [Content](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics#anatomy_of_an_html_element) between two HTML tags.
- * I used it to get the text in between an HTML <span> but it should work for any HTML element.
- * It won't work if the html doesn't have its full brackets though.
+ * Written for HTML <span> elements but it should work for any element (like a <p>).
  *
- * Info on the Regex: https://regexr.com/6s0rs
+ * Caveat: this was a quick single use function so needs work to make it more durable. Here are a couple things to watch out for:
+ * * Should start with "<" and end with ">"
+ * * Can only have one HTML element inside of it. Don't try to use something like "<div><span>hello</span></div>"
  */
 export const parseHtmlContent = (htmlString: string) => {
   // see https://regexr.com/6s0rs for pattern info
