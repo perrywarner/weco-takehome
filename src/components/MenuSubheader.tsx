@@ -63,7 +63,6 @@ export const MenuSubheader: FC<MenuProps> = ({
           display: "flex",
         }}
       >
-        {/* TODO convert to controlled component */}
         <input
           type={"checkbox"}
           id={pickupId}
