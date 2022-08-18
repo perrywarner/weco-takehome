@@ -124,17 +124,6 @@ export const Menu: FC<MenuProps> = ({ data }) => {
           </>
         );
       })}
-      {/* {data.map((entry) => {
-        return (
-          <MenuItem
-            entry={entry}
-            quantity={menuChoice.get(entry.id) ?? 0}
-            onAdd={() => updateQuantity(entry.id, "add")}
-            onSubtract={() => updateQuantity(entry.id, "sub")}
-            key={entry.id}
-          />
-        );
-      })} */}
     </div>
   );
 };
