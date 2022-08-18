@@ -1,6 +1,7 @@
 import React, { FC, useState } from "react";
 import { MenuEntry } from "../types/MenuEntry";
 import { MenuItem } from "./MenuItem";
+import "./Menu.css";
 
 enum Day {
   Monday = "mon",
@@ -54,6 +55,8 @@ export const Menu: FC<MenuProps> = ({ data }) => {
     Map<Day, TransportChoice>
   >(new Map());
 
+  // TODO think about what happens if we try to add quantity that ends up exceeding the max available? Is this something to consider?
+  // ** Probably belongs in an on submit,
   const updateQuantity = (id: MenuEntry["id"], op: "add" | "sub") => {
     // info: "??" sets previous to menuChoice.get(id) or 0 if menuChoice.get(id) returns undefined
     //(https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator)
@@ -67,11 +70,85 @@ export const Menu: FC<MenuProps> = ({ data }) => {
     }
   };
 
+  const selectTransport = (day: Day, choice: TransportChoice) => {
+    setTransportChoice(new Map(transportChoice.set(day, choice)));
+  };
+
   const sortedData = sortByDay(data);
+  const iterableSorted = Array.from(sortedData.entries());
 
   return (
-    <div>
-      {data.map((entry) => {
+    <div className="menu-list">
+      {iterableSorted.flatMap((day) => {
+        const entriesForDay = day[1];
+        const firstLetterOfDay = day[0].charAt(0).toLocaleUpperCase();
+        const capitalizedDay = day[0].toLocaleUpperCase();
+        const pickupId = `${capitalizedDay}-pickup`;
+        const deliveryId = `${capitalizedDay}-delivery`;
+        return (
+          <>
+            {/* TODO get this "header list item" special case into its own component*/}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div
+                className="menu-left"
+                style={{
+                  width: "auto",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  display: "flex",
+                }}
+              >
+                <div className="menu-date">&nbsp;{firstLetterOfDay}&nbsp;</div>
+                <p style={{ paddingLeft: ".5rem", paddingRight: ".5rem" }}>
+                  {capitalizedDay}
+                </p>
+              </div>
+              <div
+                className="menu-right"
+                style={{
+                  width: "auto",
+                  justifyContent: "flex-start",
+                  display: "flex",
+                }}
+              >
+                {/* TODO convert to controlled component */}
+                <input
+                  type={"checkbox"}
+                  id={pickupId}
+                  name="pickup"
+                  style={{ height: "2em", width: "2em" }}
+                />
+                <label htmlFor={pickupId}>Pickup</label>
+                <input
+                  type={"checkbox"}
+                  id={deliveryId}
+                  name="delivery"
+                  style={{ height: "2em", width: "2em" }}
+                />
+                <label htmlFor={deliveryId}>Delivery</label>
+              </div>
+            </div>
+            {entriesForDay.map((entry) => {
+              return (
+                <MenuItem
+                  entry={entry}
+                  quantity={menuChoice.get(entry.id) ?? 0}
+                  onAdd={() => updateQuantity(entry.id, "add")}
+                  onSubtract={() => updateQuantity(entry.id, "sub")}
+                  key={entry.id}
+                />
+              );
+            })}
+          </>
+        );
+      })}
+      {/* {data.map((entry) => {
         return (
           <MenuItem
             entry={entry}
@@ -81,7 +158,7 @@ export const Menu: FC<MenuProps> = ({ data }) => {
             key={entry.id}
           />
         );
-      })}
+      })} */}
     </div>
   );
 };

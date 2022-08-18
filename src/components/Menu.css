@@ -1,0 +1,18 @@
+.menu-list .menu-date {
+  background: url(./icon-calendar.svg) no-repeat 0px 0px;
+  width: 25px;
+  height: 26px;
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  /* font-weight: 600; */
+  /* font-size: 28px; */
+  /* line-height: 34px; */
+  color: #497b55;
+  text-align: center;
+  padding-top: 8px;
+  flex-basis: 23px;
+  flex-shrink: 0;
+  font-weight: 600;
+  font-size: 13.1429px;
+  line-height: 16px;
+}
