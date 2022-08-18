@@ -122,14 +122,14 @@ export const Menu: FC<MenuProps> = ({ data }) => {
                   type={"checkbox"}
                   id={pickupId}
                   name="pickup"
-                  style={{ height: "2em", width: "2em" }}
+                  style={{ height: "2em", width: "2em", marginTop: ".5rem" }}
                 />
                 <label htmlFor={pickupId}>Pickup</label>
                 <input
                   type={"checkbox"}
                   id={deliveryId}
                   name="delivery"
-                  style={{ height: "2em", width: "2em" }}
+                  style={{ height: "2em", width: "2em", marginTop: ".5rem" }}
                 />
                 <label htmlFor={deliveryId}>Delivery</label>
               </div>
