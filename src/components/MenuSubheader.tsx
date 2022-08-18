@@ -15,9 +15,21 @@ interface MenuProps {
   day: Day;
   pickupId: string;
   deliveryId: string;
+  pickupSelected: boolean;
+  deliverySelected: boolean;
+  onPickupClick: (day: Day) => void;
+  onDeliveryClick: (day: Day) => void;
 }
 
-export const MenuSubheader: FC<MenuProps> = ({ day, pickupId, deliveryId }) => {
+export const MenuSubheader: FC<MenuProps> = ({
+  day,
+  pickupId,
+  deliveryId,
+  pickupSelected,
+  deliverySelected,
+  onPickupClick,
+  onDeliveryClick,
+}) => {
   const firstLetterOfDay = day[0].charAt(0).toLocaleUpperCase();
   const capitalizedDay = day[0].toLocaleUpperCase();
 
@@ -57,6 +69,8 @@ export const MenuSubheader: FC<MenuProps> = ({ day, pickupId, deliveryId }) => {
           id={pickupId}
           name="pickup"
           style={{ height: "2em", width: "2em", marginTop: ".5rem" }}
+          onClick={() => onPickupClick(day)}
+          checked={pickupSelected}
         />
         <label htmlFor={pickupId}>Pickup</label>
         <input
@@ -64,6 +78,8 @@ export const MenuSubheader: FC<MenuProps> = ({ day, pickupId, deliveryId }) => {
           id={deliveryId}
           name="delivery"
           style={{ height: "2em", width: "2em", marginTop: ".5rem" }}
+          onClick={() => onDeliveryClick(day)}
+          checked={deliverySelected}
         />
         <label htmlFor={deliveryId}>Delivery</label>
       </div>

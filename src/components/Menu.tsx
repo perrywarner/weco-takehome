@@ -14,7 +14,7 @@ enum Day {
   Sunday = "sun",
 }
 
-type TransportChoice = "pickup" | "delivery";
+type TransportChoice = "pickup" | "delivery" | "unset";
 
 const sortByDay = (entries: MenuEntry[]): Map<Day, MenuEntry[]> => {
   const map = new Map<Day, MenuEntry[]>();
@@ -72,7 +72,14 @@ export const Menu: FC<MenuProps> = ({ data }) => {
   };
 
   const selectTransport = (day: Day, choice: TransportChoice) => {
-    setTransportChoice(new Map(transportChoice.set(day, choice)));
+    const prev = transportChoice.get(day);
+    const next = choice;
+    // scenario: user clicked the same checkbox as that which already was selected
+    if (prev === next) {
+      setTransportChoice(new Map(transportChoice.set(day, "unset")));
+    } else {
+      setTransportChoice(new Map(transportChoice.set(day, choice)));
+    }
   };
 
   const sortedData = sortByDay(data);
@@ -85,12 +92,23 @@ export const Menu: FC<MenuProps> = ({ data }) => {
         const capitalizedDay = day[0].toLocaleUpperCase();
         const pickupId = `${capitalizedDay}-pickup`;
         const deliveryId = `${capitalizedDay}-delivery`;
+        const stateOfCurrDay = transportChoice.get(day[0]);
+        const pickupSelected = Boolean(
+          stateOfCurrDay && stateOfCurrDay === "pickup"
+        );
+        const deliverySelected = Boolean(
+          stateOfCurrDay && stateOfCurrDay === "delivery"
+        );
         return (
           <>
             <MenuSubheader
               day={day[0]}
               pickupId={pickupId}
               deliveryId={deliveryId}
+              pickupSelected={pickupSelected}
+              deliverySelected={deliverySelected}
+              onPickupClick={(day) => selectTransport(day, "pickup")}
+              onDeliveryClick={(day) => selectTransport(day, "delivery")}
             />
             {entriesForDay.map((entry) => {
               return (
