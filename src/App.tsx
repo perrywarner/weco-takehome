@@ -29,7 +29,9 @@ export const App = () => {
   return (
     <ReactQueryProvider>
       <div className="App">
-        <MenuLoader />
+        <body>
+          <MenuLoader />
+        </body>
       </div>
     </ReactQueryProvider>
   );

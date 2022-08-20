@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import "./Menu.css";
+import "./MenuSubheader.css";
 
 enum Day {
   Monday = "mon",
@@ -9,6 +9,25 @@ enum Day {
   Friday = "fri",
   Saturday = "sat",
   Sunday = "sun",
+}
+
+function lookupFullWord(day: Day) {
+  switch (day) {
+    case "mon":
+      return "Monday";
+    case "tue":
+      return "Tuesday";
+    case "wed":
+      return "Wednesday";
+    case "thu":
+      return "Thursday";
+    case "fri":
+      return "Friday";
+    case "sat":
+      return "Saturday";
+    case "sun":
+      return "Sunday";
+  }
 }
 
 interface MenuProps {
@@ -30,44 +49,22 @@ export const MenuSubheader: FC<MenuProps> = ({
   onPickupClick,
   onDeliveryClick,
 }) => {
-  const firstLetterOfDay = day[0].charAt(0).toLocaleUpperCase();
-  const capitalizedDay = day[0].toLocaleUpperCase();
+  const firstLetterOfDay = day.charAt(0).toLocaleUpperCase();
+  const fullWord = lookupFullWord(day);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <div
-        className="menu-left"
-        style={{
-          width: "auto",
-          alignItems: "center",
-          justifyContent: "flex-start",
-          display: "flex",
-        }}
-      >
+    <div className="menu-subheader">
+      <div className="menu-subheader-left">
         <div className="menu-date">&nbsp;{firstLetterOfDay}&nbsp;</div>
         <p style={{ paddingLeft: ".5rem", paddingRight: ".5rem" }}>
-          {capitalizedDay}
+          {fullWord}
         </p>
       </div>
-      <div
-        className="menu-right"
-        style={{
-          width: "auto",
-          justifyContent: "flex-start",
-          display: "flex",
-        }}
-      >
+      <div className="menu-subheader-right">
         <input
           type={"checkbox"}
           id={pickupId}
           name="pickup"
-          style={{ height: "2em", width: "2em", marginTop: ".5rem" }}
           onClick={() => onPickupClick(day)}
           checked={pickupSelected}
         />
@@ -76,7 +73,6 @@ export const MenuSubheader: FC<MenuProps> = ({
           type={"checkbox"}
           id={deliveryId}
           name="delivery"
-          style={{ height: "2em", width: "2em", marginTop: ".5rem" }}
           onClick={() => onDeliveryClick(day)}
           checked={deliverySelected}
         />

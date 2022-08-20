@@ -1,0 +1,27 @@
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu-item-left {
+  flex: 5;
+}
+
+.menu-item-right {
+  flex: 1.25;
+
+  /* NOTE: I've set these as hardcoded styles on the element itself. 
+   ** I had to do this since "justify-content": "space-evenly" and "align-items": "center"
+   ** are both interpreted as "invalid property value" for some reason. (seen in Chrome Devtools)
+   ** On the other hand, applying the same same styles with inline styles work 🤷 
+   */
+  /* display: flex;
+  justify-content: "space-evenly";
+  align-items: "center"; */
+}
+
+.menu-item-right > input {
+  /* inspired by primary font-size (in .App) * 1.25 */
+  height: calc((10px + 2vmin) * 1.25);
+  width: calc((10px + 2vmin) * 1.25);
+}

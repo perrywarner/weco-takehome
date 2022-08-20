@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { MenuEntry } from "../types/MenuEntry";
 import { parseHtmlContent } from "../utils/parseHtmlContent";
+import "./MenuItem.css";
 
 interface MenuItemProps {
   entry: MenuEntry;
@@ -32,17 +33,18 @@ export const MenuItem: FC<MenuItemProps> = ({
   const soldOut = false;
 
   return (
-    <div style={{ display: "flex" }}>
-      <p style={{ flex: "5" }}>
+    <div className="menu-item">
+      <p className="menu-item-left">
         <strong>
-          {soldOut ? "SOLD OUT!!" : null}&nbsp;
+          {soldOut ? "SOLD OUT!! " : null}
           {entry.item.name}&nbsp;|&nbsp;
         </strong>
         {getFormattedDescription(entry.item.description)}
       </p>
       <div
+        // see "MenuItem.css" for info on why there are both a className and inline styles applied here
+        className="menu-item-right"
         style={{
-          flex: "1",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-evenly",
@@ -51,18 +53,11 @@ export const MenuItem: FC<MenuItemProps> = ({
         <input
           type={"button"}
           value="-"
-          style={{ height: "2em", width: "2em" }}
           onClick={onSubtract}
           disabled={soldOut}
         />
         <p>{quantity}</p>
-        <input
-          type={"button"}
-          value="+"
-          style={{ height: "2em", width: "2em" }}
-          onClick={onAdd}
-          disabled={soldOut}
-        />
+        <input type={"button"} value="+" onClick={onAdd} disabled={soldOut} />
       </div>
     </div>
   );
