@@ -1,8 +1,7 @@
 import React, { FC, useState } from "react";
 import { MenuEntry } from "../types/MenuEntry";
-import { MenuItem } from "./MenuItem";
-import { MenuSubheader } from "./MenuSubheader";
-import "./Menu.css";
+import { MenuItem } from "../components/MenuItem";
+import { MenuSubheader } from "../components/MenuSubheader";
 
 enum Day {
   Monday = "mon",

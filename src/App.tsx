@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MenuLoader } from "./components/MenuLoader";
+import { MenuLoader } from "./forms/MenuLoader";
 import "./App.css";
 
 const queryClient = new QueryClient();

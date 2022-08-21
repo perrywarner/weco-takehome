@@ -1,11 +1,10 @@
+// Scenario: you see a weird error in this "tsconfig.json"
+// if you just moved a file and VSCode's giving you an error "can't find file X" but you're able to compile the project with "yarn start",
+// try VSCode Keybind "ctrl-shift-p", then type & enter command "typescript: restart ts server"
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -20,7 +19,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }
