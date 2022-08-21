@@ -14,6 +14,7 @@ export interface MenuEntry {
   menu: number;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const example: MenuEntry = {
   id: 5408,
   item: {

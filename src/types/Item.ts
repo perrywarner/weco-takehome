@@ -11,6 +11,7 @@ export interface Item {
   wp_id: number;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const example: Item = {
   id: 3394,
   allergens: [],
