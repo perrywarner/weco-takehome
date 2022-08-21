@@ -19,7 +19,6 @@ const sortByDay = (entries: MenuEntry[]): Map<Day, MenuEntry[]> => {
   const map = new Map<Day, MenuEntry[]>();
   entries.forEach((entry) => {
     // "as Day" assertion is hack to get string value to play nice with Day enum
-    // TODO re-check SO to remove hack when time allows: https://stackoverflow.com/a/47755096
     const day = entry.day as Day;
 
     // TODO check: is entry.day always "mon", "tue", ... ? if not, this'll break
@@ -47,17 +46,16 @@ interface MenuProps {
 }
 
 export const Menu: FC<MenuProps> = ({ data }) => {
-  // React useState with Map type (object of key-value pairs) isn't a normal design pattern.
-  // However, I chose it since we have an indeterminate length of "Menu Entries" that only are available to this component after the request loads,
-  // and I think a Map is the best data structure for when I want to capture a value attached to a unique ID and I don't know the available IDs ahead of time.
+  // useState with Map type (builtin "hash map" similar to Dictionary in Python) isn't a normal design pattern.
+  // However, I chose it since length of Menu Entries are unknown until runtime (require API fetch),
+  // and I think a Map is the best data structure for when I want to capture a value associated with a unique ID and I don't know the available IDs ahead of time.
   const [menuChoice, setMenuChoice] = useState<Map<number, number>>(new Map());
   const [transportChoice, setTransportChoice] = useState<
     Map<Day, TransportChoice>
   >(new Map());
 
   // TODO think about what happens if we try to add quantity that ends up exceeding the max available? Is this something to consider?
-  // ** Probably belongs in an on submit,
-  const updateQuantity = (id: MenuEntry["id"], op: "add" | "sub") => {
+  const handleUpdateQuantity = (id: MenuEntry["id"], op: "add" | "sub") => {
     // info: "??" sets previous to menuChoice.get(id) or 0 if menuChoice.get(id) returns undefined
     //(https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator)
     const previous = menuChoice.get(id) ?? 0;
@@ -70,7 +68,7 @@ export const Menu: FC<MenuProps> = ({ data }) => {
     }
   };
 
-  const selectTransport = (day: Day, choice: TransportChoice) => {
+  const handleChooseTransport = (day: Day, choice: TransportChoice) => {
     const prev = transportChoice.get(day);
     const next = choice;
     // scenario: user clicked the same checkbox as that which already was selected
@@ -81,6 +79,20 @@ export const Menu: FC<MenuProps> = ({ data }) => {
     }
   };
 
+  const handleAddToBag = async () => {
+    // mimic a form submission - not sure what API would be submitted to at this point but I made a guess to what it might be
+    await new Promise((r) => setTimeout(r, 500));
+    const submittedValues = {
+      menuItemsById: Object.fromEntries(menuChoice),
+      delivery: Object.fromEntries(transportChoice),
+    };
+    alert(JSON.stringify(submittedValues, null, 2));
+
+    // reset the form
+    setMenuChoice(new Map());
+    setTransportChoice(new Map());
+  };
+
   const sortedData = sortByDay(data);
   const iterableSorted = Array.from(sortedData.entries());
 
@@ -89,40 +101,38 @@ export const Menu: FC<MenuProps> = ({ data }) => {
       {iterableSorted.flatMap((day) => {
         const entriesForDay = day[1];
         const capitalizedDay = day[0].toLocaleUpperCase();
-        const pickupId = `${capitalizedDay}-pickup`;
-        const deliveryId = `${capitalizedDay}-delivery`;
-        const stateOfCurrDay = transportChoice.get(day[0]);
-        const pickupSelected = Boolean(
-          stateOfCurrDay && stateOfCurrDay === "pickup"
-        );
-        const deliverySelected = Boolean(
-          stateOfCurrDay && stateOfCurrDay === "delivery"
-        );
+        const selectedDeliveryMethod = transportChoice.get(day[0]);
         return (
-          <>
+          // need explicit <React.Fragment> to be allowed to set key={} - see "Keyed Fragments" in https://reactjs.org/docs/fragments.html
+          <React.Fragment key={day[0]}>
             <MenuSubheader
               day={day[0]}
-              pickupId={pickupId}
-              deliveryId={deliveryId}
-              pickupSelected={pickupSelected}
-              deliverySelected={deliverySelected}
-              onPickupClick={(day) => selectTransport(day, "pickup")}
-              onDeliveryClick={(day) => selectTransport(day, "delivery")}
+              pickupSelected={Boolean(
+                selectedDeliveryMethod && selectedDeliveryMethod === "pickup"
+              )}
+              deliverySelected={Boolean(
+                selectedDeliveryMethod && selectedDeliveryMethod === "delivery"
+              )}
+              onPickupClick={(day) => handleChooseTransport(day, "pickup")}
+              onDeliveryClick={(day) => handleChooseTransport(day, "delivery")}
+              pickupId={`${capitalizedDay}-pickup`}
+              deliveryId={`${capitalizedDay}-delivery`}
             />
             {entriesForDay.map((entry) => {
               return (
                 <MenuItem
                   entry={entry}
                   quantity={menuChoice.get(entry.id) ?? 0}
-                  onAdd={() => updateQuantity(entry.id, "add")}
-                  onSubtract={() => updateQuantity(entry.id, "sub")}
+                  onAdd={() => handleUpdateQuantity(entry.id, "add")}
+                  onSubtract={() => handleUpdateQuantity(entry.id, "sub")}
                   key={entry.id}
                 />
               );
             })}
-          </>
+          </React.Fragment>
         );
       })}
+      <button onClick={handleAddToBag}>ADD TO BAG</button>
     </div>
   );
 };
