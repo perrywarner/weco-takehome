@@ -28,9 +28,8 @@ export const MenuItem: FC<MenuItemProps> = ({
     }
   };
 
-  // TODO uncomment when done with testing (everything seems to be sold out right now)
-  //   const soldOut = entry.sold_out
-  const soldOut = false;
+  // data being returned by API seems to all be "sold out", so you can hardcode this to "false" if want to test UI when not sold out
+  const soldOut = entry.sold_out;
 
   return (
     <div className="menu-item">

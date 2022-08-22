@@ -11,8 +11,8 @@ describe("Menu", () => {
   it("should generate Menu Items from the Menu data provided by props", () => {
     render(<Menu data={testData} />);
     const menuItemName = testData[0].item.name;
-    // note: getByText(menuItemName) isn't enough by itself since the element containing its text also has a " |"
-    const menuItemElement = screen.getByText(`${menuItemName} |`);
+    // note: getByText(menuItemName) isn't enough by itself since element also contains "SOLD OUT!!" and " |"
+    const menuItemElement = screen.getByText(`SOLD OUT!! ${menuItemName} |`);
     expect(menuItemElement).toBeVisible();
   });
   it.todo("should make sure that Menu Items are sorted by Day");
