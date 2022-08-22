@@ -7,8 +7,14 @@ import { MenuEntry } from "../types/MenuEntry";
 const testData: MenuEntry[] = sampleData;
 
 describe("Menu", () => {
-  // if I could've gotten Cypress going, Cypress would be appropriate to help test against the backing data too, making it more of an E2E test
-  it("should generate Menu Items from the Menu data provided by props", () => {});
+  // In the future, Cypress E2E would be a good extra step since it actually looks at a browser and relies on the API for data instead of injecting data into components via props.
+  it("should generate Menu Items from the Menu data provided by props", () => {
+    render(<Menu data={testData} />);
+    const menuItemName = testData[0].item.name;
+    // note: getByText(menuItemName) isn't enough by itself since the element containing its text also has a " |"
+    const menuItemElement = screen.getByText(`${menuItemName} |`);
+    expect(menuItemElement).toBeVisible();
+  });
   it.todo("should make sure that Menu Items are sorted by Day");
   it.todo(
     "should enable the user to select one of Pickup or Delivery for a given Day"
