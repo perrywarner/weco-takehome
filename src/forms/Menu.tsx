@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 import { MenuEntry } from "../types/MenuEntry";
 import { MenuItem } from "../components/MenuItem";
 import { MenuSubheader } from "../components/MenuSubheader";
+import { MenuAddButton } from "../components/MenuAddButton";
 
 enum Day {
   Monday = "mon",
@@ -132,7 +133,7 @@ export const Menu: FC<MenuProps> = ({ data }) => {
           </React.Fragment>
         );
       })}
-      <button onClick={handleAddToBag}>ADD TO BAG</button>
+      <MenuAddButton onClick={handleAddToBag}>ADD TO BAG</MenuAddButton>
     </div>
   );
 };

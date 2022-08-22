@@ -1,0 +1,28 @@
+/* Ripped these styles off the corresponding button element from https://order.wecohospitality.com/weco-boston-8-29-9-2/ */
+.menu-list .btn-green {
+  display: table;
+  margin: auto;
+  margin-top: 47px;
+  width: 299px;
+  max-width: 100%;
+  text-transform: uppercase;
+}
+
+.btn-green {
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  /* font-size: 14.2169px; */
+  line-height: 17px;
+  text-align: center;
+  color: #ffffff;
+  background: #497b55;
+  border: 1.77711px solid #497b55;
+  border-radius: 3.55422px;
+  border-radius: 0;
+  padding: 21px 33px;
+  outline: none;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
