@@ -23,10 +23,10 @@ In order:
 
 With checks:
 
-- [ ] Data load & storage (React)
-- [ ] Markup (HTML)
-- [ ] Styling (CSS)
-- [ ] Bonus (calendar icons, WECO logo in top nav, etc.)
+- [x] Data load & storage (React)
+- [x] Markup (HTML)
+- [x] Styling (CSS)
+- [x] Bonus (calendar icons, WECO logo in top nav, etc.)
 
 ---
 
