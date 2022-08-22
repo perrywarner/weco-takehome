@@ -32,7 +32,7 @@ With checks:
 
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). It uses the [Yarn package manager](https://yarnpkg.com/), make sure to have it [installed on your machine](https://yarnpkg.com/getting-started/install). Once Yarn is installed, you can navigate to this project and `yarn install` the dependencies. Once the dependencies are installed, you can `yarn start` to see the app run or read on to see other options:
 
 ## Available Scripts
 
