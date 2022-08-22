@@ -65,7 +65,7 @@ export const MenuSubheader: FC<MenuProps> = ({
           type={"checkbox"}
           id={pickupId}
           name="pickup"
-          onClick={() => onPickupClick(day)}
+          onChange={() => onPickupClick(day)}
           checked={pickupSelected}
         />
         <label htmlFor={pickupId}>Pickup</label>
@@ -73,7 +73,7 @@ export const MenuSubheader: FC<MenuProps> = ({
           type={"checkbox"}
           id={deliveryId}
           name="delivery"
-          onClick={() => onDeliveryClick(day)}
+          onChange={() => onDeliveryClick(day)}
           checked={deliverySelected}
         />
         <label htmlFor={deliveryId}>Delivery</label>
